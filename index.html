@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Murmur – music, podcasts, radio and audiobooks</title>
+<meta name="description" content="One search and one player for Apple Music, podcasts, internet radio, audiobooks and your own media servers.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <header><a href="./">Murmur</a><nav><a href="privacy.html">Privacy</a><a href="support.html">Support</a></nav></header>
+
+  <h1>Everything you listen to, in one place.</h1>
+  <p class="lead">Murmur brings Apple Music, podcasts, internet radio, audiobooks and your own media servers together, with one search and one player.</p>
+  <ul class="chips">
+    <li class="m">Apple Music</li><li class="p">Podcasts</li><li class="r">Radio</li><li class="b">Audiobooks</li><li>Your servers</li>
+  </ul>
+
+  <div class="shots" id="shots"></div>
+
+  <div class="grid">
+    <div class="card"><h3>One search</h3><p>Songs, albums, podcasts, episodes, stations and books in a single list.</p></div>
+    <div class="card"><h3>Never lose your place</h3><p>Every episode and book remembers where you stopped, on all your devices.</p></div>
+    <div class="card"><h3>Made for listening</h3><p>Speed per show, skip intros, bookmarks, sleep timer, chapters and downloads.</p></div>
+    <div class="card"><h3>In the car</h3><p>CarPlay, Siri (“Play SRF 3 in Murmur”), widgets and Control Center.</p></div>
+    <div class="card"><h3>Your own library</h3><p>Audiobookshelf, Jellyfin and Plex, plus free audiobooks from LibriVox.</p></div>
+    <div class="card"><h3>Private</h3><p>No account, no tracking, no ads. Nothing about you leaves your device.</p></div>
+  </div>
+
+  <section class="lang" lang="de">
+    <h2>Auf Deutsch</h2>
+    <p>Murmur vereint Apple Music, Podcasts, Internetradio, Hörbücher und eigene Medienserver – mit einer Suche und einem Player. Jede Episode und jedes Hörbuch merkt sich, wo du aufgehört hast, auf allen deinen Geräten. Dazu Tempo pro Sendung, Lesezeichen, Schlaftimer, Downloads, CarPlay, Siri und Widgets. Ohne Konto, ohne Tracking, ohne Werbung.</p>
+  </section>
+
+  <footer>© 2026 Gernot Weber · <a href="privacy.html">Privacy / Datenschutz</a> · <a href="support.html">Support</a><br>
+  Apple Music is a trademark of Apple Inc. Murmur is not affiliated with Apple or the other services it connects to.</footer>
+</main>
+<script>
+  // Screenshots, if present (added after each App Store screenshot run).
+  const shots = ["1-home", "2-search", "3-player", "4-library", "5-sources"];
+  const lang = navigator.language.startsWith("de") ? "de" : "en";
+  const box = document.getElementById("shots");
+  shots.forEach(name => {
+    const img = new Image();
+    img.alt = name.slice(2);
+    img.onload = () => box.appendChild(img);
+    img.src = `screenshots/${lang}/${name}.png`;
+  });
+</script>
+</body>
+</html>

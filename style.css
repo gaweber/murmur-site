@@ -33,3 +33,6 @@ p, li { color: var(--ink); }
 a { color: var(--podcast); }
 footer { margin-top: 56px; color: var(--muted); font-size: 14px; }
 @media (max-width: 520px) { h1 { font-size: 34px; } .shots img { height: 380px; } }
+
+.price { margin: 32px 0; padding: 20px 22px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line); }
+.price h2 { margin-top: 0; }

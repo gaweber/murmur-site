@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Murmur · Shared moment</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .moment { max-width: 560px; margin: 0 auto; padding: 32px 16px; }
+  .moment img { width: 160px; height: 160px; border-radius: 18px; object-fit: cover; background: var(--surface); }
+  .moment h1 { font-size: 26px; margin: 18px 0 4px; }
+  .moment .show { color: var(--muted); margin: 0 0 18px; }
+  .moment .buttons { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+  .moment a.button, .moment button { display: block; text-align: center; padding: 14px; border-radius: 999px; font: inherit; font-weight: 600; border: 1px solid var(--line); background: transparent; color: var(--ink); text-decoration: none; cursor: pointer; }
+  .moment a.primary { background: var(--ink); color: var(--ground); border-color: var(--ink); }
+  .moment audio { width: 100%; margin-top: 8px; }
+  .moment .note { color: var(--muted); font-size: 14px; }
+</style>
+</head>
+<body>
+<main class="moment">
+  <img id="art" alt="" hidden>
+  <h1 id="title">Shared moment</h1>
+  <p class="show"><span id="show"></span> <span id="at"></span></p>
+  <div class="buttons">
+    <a class="button primary" id="open" href="#">Open in Murmur</a>
+    <button id="listen" type="button">Listen here</button>
+  </div>
+  <audio id="player" controls preload="none" hidden></audio>
+  <p class="note">Shared from <a href="./">Murmur</a>, an audio app for iPhone. Nothing about this link is stored or tracked: the details are only in the link itself.</p>
+  <p class="note" lang="de">Geteilt aus Murmur. «Open in Murmur» öffnet die Stelle in der App, «Listen here» spielt sie hier im Browser.</p>
+</main>
+<script>
+  // Everything comes from the part after "#", which browsers never send to a server.
+  const params = new URLSearchParams(location.hash.slice(1));
+  const audio = params.get("a"), seconds = parseInt(params.get("t") || "0", 10);
+  const title = params.get("ti"), show = params.get("s"), art = params.get("i");
+  const clock = s => { const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = String(s % 60).padStart(2, "0");
+    return h ? `${h}:${String(m).padStart(2, "0")}:${x}` : `${m}:${x}`; };
+  if (title) { document.getElementById("title").textContent = title; document.title = title + " · Murmur"; }
+  if (show) document.getElementById("show").textContent = show;
+  document.getElementById("at").textContent = "· from " + clock(seconds);
+  if (art && /^https:/.test(art)) { const img = document.getElementById("art"); img.src = art; img.hidden = false; }
+  document.getElementById("open").href = "murmur://moment?" + params.toString();
+  const okAudio = audio && /^https?:/.test(audio);
+  const listen = document.getElementById("listen");
+  if (!okAudio) listen.hidden = true;
+  listen.addEventListener("click", () => {
+    const player = document.getElementById("player");
+    player.src = audio; player.hidden = false;
+    player.addEventListener("loadedmetadata", () => { player.currentTime = seconds; player.play(); }, { once: true });
+    player.load();
+  });
+</script>
+</body>
+</html>
